@@ -17,10 +17,10 @@ poetry install
 
 ## Repository Structure 
 
-1. Introduction : Neural Networ & Perceptron Theory, concrete example, python implemntation of a single layer perceptron and presentation of other examples.
-2. Standard Neural Networks : Feed-Forward Networks & Residual Networks (ResNet) using Pytorch
-3. Recurrent Neural Networks (RNNs) : The Long Short Term Memory Network (LSTM) using Pytorch
-4. Convolutional Neural Networks (CNNs) : CNNs using Pytorch
-5. Generative Adversarial Network (GAN) : GAN using Pytorch
-6. Transformer Neural Networks : Implementing a french Language Model(Small One) using Pytorch 
+1. **Introduction** : Neural Networks & Perceptron Theory, concrete example, python implemntation of a single layer perceptron.
+2. **Standard Neural Networks** : Feed-Forward Networks & Residual Networks (ResNet) using Pytorch.
+3. **Recurrent Neural Networks (RNNs)** : The Long Short Term Memory Network (LSTM) using Pytorch.
+4. **Convolutional Neural Networks (CNNs)** : CNNs using Pytorch.
+5. **Generative Adversarial Network (GAN)** : GAN using Pytorch.
+6. **Transformer Neural Networks** : Implementing a french Language Model(Small One) using Pytorch.
 

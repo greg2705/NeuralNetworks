@@ -307,3 +307,35 @@ def print_benchmark_table(results: List[Dict[str, Any]]) -> None:
 #     # print(json.dumps(results, indent=2))
 #
 # asyncio.run(main())
+
+
+import os
+os.environ["OMP_NUM_THREADS"] = "8"       # match your physical core count
+os.environ["MKL_NUM_THREADS"] = "8"
+os.environ["OPENBLAS_NUM_THREADS"] = "8"
+
+
+from paddlex.inference import load_pipeline_config
+
+cfg = load_pipeline_config("OCR")
+cfg["use_doc_preprocessor"] = False
+cfg["use_textline_orientation"] = False
+
+for sub_name in ("TextDetection", "TextRecognition"):
+    sub_cfg = cfg["SubModules"][sub_name]
+    sub_cfg["use_hpip"] = True
+    sub_cfg["hpi_config"] = {
+        "auto_config": False,
+        "backend": "openvino",
+        "backend_config": {
+            "cpu_num_threads": 8,   # adjust to your CPU core count
+            "precision": "FP16",
+        },
+        "auto_paddle2onnx": True,
+    }
+
+
+
+
+
+

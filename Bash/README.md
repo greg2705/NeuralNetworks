@@ -2,6 +2,11 @@
 
 This document describes how the agent’s `shell` skill works: what it can do, where it can do it, and which protections are enforced by the backend wrapper rather than by the model.
 
+## How Claude Code do
+
+Claude Code uses a permission system with allow, ask, and deny rules, and those rules are evaluated in deny -> ask -> allow order, with the first match winning. Bash commands normally require approval, while some read-only commands are treated specially and can run without prompts.
+
+
 ## High‑level design
 
 - The agent does **not** have a full shell.

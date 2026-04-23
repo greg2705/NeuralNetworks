@@ -46,25 +46,33 @@ response = client.responses.create(
     tools=tools,
 )
 
-# 5) Append model output and execute tool calls
-messages += response.output
+message = response.choices[0].message
 
-for item in response.output:
-    if item.type == "function_call" and item.name == "get_repo_file":
-        args = json.loads(item.arguments)
-        result = get_repo_file(args["path"])
+if message.tool_calls:
+    messages.append(message)
+
+    for tool_call in message.tool_calls:
+        name = tool_call.function.name
+        args = json.loads(tool_call.function.arguments)
+
+        if name == "get_repo_file":
+            result = get_repo_file(args["path"])
+        else:
+            result = f"Unknown tool: {name}"
 
         messages.append({
-            "type": "function_call_output",
-            "call_id": item.call_id,
-            "output": result
+            "role": "tool",
+            "tool_call_id": tool_call.id,
+            "content": result
         })
 
-# 6) Ask the model again so it can use the tool result
-final_response = client.responses.create(
-    model="gpt-4.1-mini",
-    input=messages,
-    tools=tools,
-)
+    final_response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=messages,
+    )
+
+    print(final_response.choices[0].message.content)
+else:
+    print(message.content)
 
 print(final_response.output_text)
